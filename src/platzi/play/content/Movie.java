@@ -14,7 +14,7 @@ public class Movie {
 
     // Methods
     public void play(){
-        System.out.println("Playing " + title);
+        System.out.println(title);
     }
 
     public String getTechnicalSheet(){

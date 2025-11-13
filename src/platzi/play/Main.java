@@ -1,6 +1,7 @@
 package platzi.play;
 
-import platzi.play.content.Movie;
+import platzi.play.content.*;
+import platzi.play.platform.User;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,7 +15,10 @@ public class Main {
         movie.genre = "Science Fiction";
         movie.rate(7.5);
 
-        System.out.println(movie.getTechnicalSheet());
+        User user = new User();
+        user.name = "Don Juan";
+
+        user.watching(movie);
 
     }
 }
