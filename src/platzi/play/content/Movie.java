@@ -13,6 +13,18 @@ public class Movie {
     public double rating;
     public boolean available;
 
+    public Movie(String title, int duration, String genre){
+        this.title = title;
+        this.duration = duration;
+        this.genre = genre;
+        this.releaseDate = LocalDate.now();
+        this.available = true;
+    }
+
+    public Movie(String title, int duration, String genre, double rating) {
+        this(title, duration, genre);
+        this.rate(rating);
+    }
 
     // Methods
     public void play(){
