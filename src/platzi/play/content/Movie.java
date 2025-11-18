@@ -1,5 +1,7 @@
 package platzi.play.content;
 
+import java.time.LocalDate;
+
 public class Movie {
 
     // Attributes
@@ -7,7 +9,7 @@ public class Movie {
     public String description;
     public int duration;
     public String genre;
-    public int releaseYear;
+    public LocalDate releaseDate;
     public double rating;
     public boolean available;
 
@@ -18,7 +20,7 @@ public class Movie {
     }
 
     public String getTechnicalSheet(){
-        return title + " (" + releaseYear + ")\n" +
+        return title + " (" + releaseDate.getYear() + ")\n" +
                 "Genre: " + genre + "\n" +
                 "Rating: " + rating + "/10";
     }
