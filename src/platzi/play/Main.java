@@ -18,6 +18,8 @@ public class Main {
         // Instantiate an object
         Movie movie = new Movie(name, duration, genre, rating);
 
+        movie.setAvailable(false);
+
         System.out.println(movie.getTechnicalSheet());
 
         User user = new User("Juan", "juan@platzi.com");

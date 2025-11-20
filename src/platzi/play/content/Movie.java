@@ -5,13 +5,13 @@ import java.time.LocalDate;
 public class Movie {
 
     // Attributes
-    public String title;
-    public String description;
-    public int duration;
-    public String genre;
-    public LocalDate releaseDate;
-    public double rating;
-    public boolean available;
+    private String title;
+    private String description;
+    private int duration;
+    private String genre;
+    private LocalDate releaseDate;
+    private double rating;
+    private boolean available;
 
     public Movie(String title, int duration, String genre){
         this.title = title;
@@ -47,5 +47,44 @@ public class Movie {
         return rating >= 8;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 }
 
