@@ -13,6 +13,11 @@ public class ScannerUtils {
     public static int inputNumber(String message){
         System.out.println(message + ": ");
 
+        while (!SCANNER.hasNextInt()) {
+            System.out.println("Input not accepted. " + message + ": ");
+            SCANNER.next();
+        }
+
         int data = SCANNER.nextInt();
         SCANNER.nextLine();
         return data;
@@ -20,6 +25,11 @@ public class ScannerUtils {
 
     public static double inputDecimalValue(String message){
         System.out.println(message + ": ");
+
+        while (!SCANNER.hasNextDouble()) {
+            System.out.println("Input not accepted. " + message + ": ");
+            SCANNER.next();
+        }
 
         double data = SCANNER.nextDouble();
         SCANNER.nextLine();
