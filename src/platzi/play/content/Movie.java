@@ -31,10 +31,10 @@ public class Movie {
         System.out.println(title);
     }
 
-    public String getTechnicalSheet(){
-        return title + " (" + releaseDate.getYear() + ")\n" +
-                "Genre: " + genre + "\n" +
-                "Rating: " + rating + "/10";
+    public String getTechnicalSheet() {
+        return "Title: " + title + " (" + releaseDate.getYear() + ")\n" +
+                "   Genre: " + genre + "\n" +
+                "   Rating: " + String.format("%.1f", rating) + "/5 ⭐";
     }
 
     public void rate(double rating){

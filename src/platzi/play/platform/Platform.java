@@ -3,6 +3,7 @@ package platzi.play.platform;
 import platzi.play.content.Movie;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Platform {
@@ -18,10 +19,10 @@ public class Platform {
         this.content.add(element);
     }
 
-    public void showTitles(){
-        for (Movie movie : content) {
-            System.out.println(movie.getTitle());
-        }
+    public List<String> getTitles(){
+        return content.stream()
+                .map(Movie::getTitle)
+                .toList();
     }
 
     public void delete(Movie element){
@@ -29,13 +30,29 @@ public class Platform {
     }
 
     public Movie searchByTitle(String title){
-        for (Movie movie : content){
-            if(movie.getTitle().equalsIgnoreCase(title)){
-                return movie;
-            }
-        }
+        return content.stream()
+                .filter(content -> content.getTitle().equalsIgnoreCase(title))
+                .findFirst()
+                .orElse(null);
+    }
 
-        return null;
+    public List <Movie> searchByGenre(String genre){
+        return content.stream()
+                .filter(content -> content.getGenre().equalsIgnoreCase(genre))
+                .toList();
+    }
+
+    public List<Movie> getPopularMovies(int count){
+        return content.stream()
+                .sorted(Comparator.comparingDouble(Movie::getRating).reversed())
+                .limit(count)
+                .toList();
+    }
+
+    public int getTotalDuration(){
+        return content.stream()
+                .mapToInt(Movie::getDuration)
+                .sum();
     }
 
     public String getName(){

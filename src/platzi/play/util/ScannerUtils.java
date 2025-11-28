@@ -6,7 +6,7 @@ public class ScannerUtils {
     public static final Scanner SCANNER = new Scanner(System.in);
 
     public static String inputText(String message){
-        System.out.println(message + ": ");
+        System.out.println(message + ": \n");
         return SCANNER.nextLine();
     }
 

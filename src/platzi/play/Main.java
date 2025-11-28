@@ -4,6 +4,8 @@ import platzi.play.content.*;
 import platzi.play.platform.*;
 import platzi.play.util.ScannerUtils;
 
+import java.util.List;
+
 public class Main {
     public static final String NAME_PLATFORM = "PLATZI PLAY";
     public static final String VERSION = "1.0.0";
@@ -13,23 +15,28 @@ public class Main {
                 1. Add content
                 2. Show all
                 3. Search by title
-                4. Delete
-                5. Exit
+                4. Search by genre
+                5. Show popular movies
+                6. Delete
+                7. Exit
                 -----------------------------------
-                Select an option:
-                """;
+                Select an option""";
 
     public static final int ADD_CONTENT = 1;
     public static final int SHOW_ALL = 2;
     public static final int SEARCH_BY_TITLE = 3;
-    public static final int DELETE = 4;
-    public static final int EXIT_VALUE = 5;
+    public static final int SEARCH_BY_GENRE = 4;
+    public static final int SHOW_HIGH_RATING = 5;
+    public static final int DELETE = 6;
+    public static final int EXIT_VALUE = 7;
 
     public static void main(String[] args) {
         Platform platform = new Platform(NAME_PLATFORM);
         System.out.println(NAME_PLATFORM + " v" + VERSION);
 
         loadMovies(platform);
+
+        System.out.println(platform.getTotalDuration() + " minutes of total content. \n");
 
         while (true) {
             int selectedOption = ScannerUtils.inputNumber(MENU);
@@ -45,7 +52,8 @@ public class Main {
                     platform.add(movie);
                 }
                 case SHOW_ALL -> {
-                    platform.showTitles();
+                    List<String> titles = platform.getTitles();
+                    titles.forEach(System.out::println);
                 }
                 case SEARCH_BY_TITLE -> {
                     String inputName = ScannerUtils.inputText("Enter the name you want to search");
@@ -57,8 +65,32 @@ public class Main {
                         System.out.println("Could not find \"" + inputName + "\" in " + platform.getName());
                     }
                 }
+                case SEARCH_BY_GENRE -> {
+                    String genreSearching = ScannerUtils.inputText("Enter the genre you want to search: ");
+
+                    List<Movie> contentForGenre = platform.searchByGenre(genreSearching);
+
+                    System.out.println("\n=== Search Results for Genre: " + genreSearching + " ===");
+                    System.out.println("Total results: " + contentForGenre.size());
+                    System.out.println("----------------------------------------");
+
+                    int index = 1;
+                    for (Movie content : contentForGenre) {
+                        System.out.println(index++ + ". " + content.getTitle());
+                        System.out.println(content.getTechnicalSheet());
+                        System.out.println();
+                    }
+                }
+
+                case SHOW_HIGH_RATING -> {
+                    int count = ScannerUtils.inputNumber("Enter the count to movies do you want show");
+                    List<Movie> highRatingContent = platform.getPopularMovies(count);
+
+                    highRatingContent.forEach(content -> System.out.println(content.getTechnicalSheet() + "\n"));
+                }
+
                 case DELETE -> {
-                    String inputName = ScannerUtils.inputText("Enter the name you want to delete:");
+                    String inputName = ScannerUtils.inputText("Please enter the number of movies to display");
                     Movie movie = platform.searchByTitle(inputName);
 
                     if (movie != null){
