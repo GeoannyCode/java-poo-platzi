@@ -1,5 +1,9 @@
 package platzi.play.util;
 
+import platzi.play.content.Genre;
+import platzi.play.content.VideoQuality;
+
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ScannerUtils {
@@ -35,5 +39,35 @@ public class ScannerUtils {
         SCANNER.nextLine();
         return data;
     }
+
+    public static Genre inputGenre(String message){
+        System.out.println("Available genres: " + Arrays.toString(Genre.values()));
+
+        while(true){
+            String input = inputText(message).trim().toUpperCase();
+
+            try {
+                return Genre.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.printf("'%s' is not a valid genre. Please try again.%n%n", input);
+            }
+        }
+    }
+
+    public static VideoQuality inputVideoQuality(String message){
+        System.out.println("Available video Qualities: " + Arrays.toString(VideoQuality.values()));
+
+        while(true){
+            String input = inputText(message).trim().toUpperCase();
+
+            try {
+                return VideoQuality.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.printf("'%s' is not a valid video quality. Please try again.%n%n", input);
+            }
+        }
+    }
+
+
 
 }

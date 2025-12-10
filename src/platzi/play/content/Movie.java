@@ -8,21 +8,23 @@ public class Movie {
     private String title;
     private String description;
     private int duration;
-    private String genre;
+    private Genre genre;
+    private VideoQuality videoQuality;
     private LocalDate releaseDate;
     private double rating;
     private boolean available;
 
-    public Movie(String title, int duration, String genre){
+    public Movie(String title, int duration, Genre genre, VideoQuality videoQuality){
         this.title = title;
         this.duration = duration;
         this.genre = genre;
+        this.videoQuality = videoQuality;
         this.releaseDate = LocalDate.now();
         this.available = true;
     }
 
-    public Movie(String title, int duration, String genre, double rating) {
-        this(title, duration, genre);
+    public Movie(String title, int duration, Genre genre, VideoQuality videoQuality, double rating) {
+        this(title, duration, genre, videoQuality);
         this.rate(rating);
     }
 
@@ -34,6 +36,7 @@ public class Movie {
     public String getTechnicalSheet() {
         return "Title: " + title + " (" + releaseDate.getYear() + ")\n" +
                 "   Genre: " + genre + "\n" +
+                "   Video Quality: " + videoQuality.getDescription() + " ("+  videoQuality.getLabel() + ")\n" +
                 "   Rating: " + String.format("%.1f", rating) + "/5 ⭐";
     }
 
@@ -59,8 +62,12 @@ public class Movie {
         return duration;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
+    }
+
+    public VideoQuality getVideoQuality(){
+        return videoQuality;
     }
 
     public LocalDate getReleaseDate() {
@@ -79,7 +86,7 @@ public class Movie {
         this.description = description;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 

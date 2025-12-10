@@ -1,0 +1,10 @@
+package platzi.play.content;
+
+public enum Genre {
+    ACTION,
+    COMEDY,
+    DRAMA,
+    ANIMATED,
+    HORROR,
+    SCIENCE_FICTION
+}

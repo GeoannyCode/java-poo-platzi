@@ -1,6 +1,8 @@
 package platzi.play.platform;
 
+import platzi.play.content.Genre;
 import platzi.play.content.Movie;
+import platzi.play.content.VideoQuality;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -36,9 +38,15 @@ public class Platform {
                 .orElse(null);
     }
 
-    public List <Movie> searchByGenre(String genre){
+    public List <Movie> searchByGenre(Genre genre){
         return content.stream()
-                .filter(content -> content.getGenre().equalsIgnoreCase(genre))
+                .filter(content -> content.getGenre().equals(genre))
+                .toList();
+    }
+
+    public List <Movie> searchByVideoQuality(VideoQuality videoQuality){
+        return content.stream()
+                .filter(content -> content.getVideoQuality().equals(videoQuality))
                 .toList();
     }
 
