@@ -4,6 +4,7 @@ import platzi.play.content.Genre;
 import platzi.play.content.LanguageType;
 import platzi.play.content.Movie;
 import platzi.play.content.VideoQuality;
+import platzi.play.exception.ExistingMovieException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,6 +20,12 @@ public class Platform {
     }
 
     public void add(Movie element){
+        Movie content = this.searchByTitle(element.getTitle());
+
+        if(content != null){
+            throw new ExistingMovieException(element.getTitle());
+        }
+
         this.content.add(element);
     }
 
