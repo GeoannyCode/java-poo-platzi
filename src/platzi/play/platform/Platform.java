@@ -1,6 +1,7 @@
 package platzi.play.platform;
 
 import platzi.play.content.Genre;
+import platzi.play.content.LanguageType;
 import platzi.play.content.Movie;
 import platzi.play.content.VideoQuality;
 
@@ -47,6 +48,13 @@ public class Platform {
     public List <Movie> searchByVideoQuality(VideoQuality videoQuality){
         return content.stream()
                 .filter(content -> content.getVideoQuality().equals(videoQuality))
+                .toList();
+    }
+
+
+    public List <Movie> searchByLanguageType(LanguageType languageType){
+        return content.stream()
+                .filter(content -> content.getLanguageType().equals(languageType))
                 .toList();
     }
 

@@ -17,9 +17,10 @@ public class Main {
                 3. Search by title
                 4. Search by genre
                 5. Search by video quality
-                6. Show popular movies
-                7. Delete
-                8. Exit
+                6. Search by language
+                7. Show popular movies
+                8. Delete
+                9. Exit
                 -----------------------------------
                 Select an option""";
 
@@ -28,9 +29,10 @@ public class Main {
     public static final int SEARCH_BY_TITLE = 3;
     public static final int SEARCH_BY_GENRE = 4;
     public static final int SEARCH_BY_VIDEO_QUALITY = 5;
-    public static final int SHOW_HIGH_RATING = 6;
-    public static final int DELETE = 7;
-    public static final int EXIT_VALUE = 8;
+    public static final int SEARCH_BY_LANGUAGE_TYPE = 6;
+    public static final int SHOW_HIGH_RATING = 7;
+    public static final int DELETE = 8;
+    public static final int EXIT_VALUE = 9;
 
     public static void main(String[] args) {
         Platform platform = new Platform(NAME_PLATFORM);
@@ -48,10 +50,11 @@ public class Main {
                     String name = ScannerUtils.inputText("Content name");
                     Genre genre = ScannerUtils.inputGenre("Content genre");
                     VideoQuality videoQuality = ScannerUtils.inputVideoQuality("Content video quality");
+                    LanguageType languageType = ScannerUtils.inputLanguageType("Content language type");
                     int duration = ScannerUtils.inputNumber("Content duration");
                     double rating = ScannerUtils.inputDecimalValue("Content rating");
 
-                    Movie movie = new Movie(name, duration, genre, videoQuality, rating);
+                    Movie movie = new Movie(name, duration, genre, videoQuality, languageType,  rating);
                     platform.add(movie);
                 }
                 case SHOW_ALL -> {
@@ -102,6 +105,23 @@ public class Main {
                     }
                 }
 
+                case SEARCH_BY_LANGUAGE_TYPE -> {
+                    LanguageType languageTypeSearching = ScannerUtils.inputLanguageType("Enter the language you want to search: ");
+
+                    List<Movie> moviesByLanguage = platform.searchByLanguageType(languageTypeSearching);
+
+                    System.out.println("\n=== Search Results for language type: " + languageTypeSearching + " ===");
+                    System.out.println("Total results: " + moviesByLanguage.size());
+                    System.out.println("----------------------------------------");
+
+                    int index = 1;
+                    for (Movie content : moviesByLanguage) {
+                        System.out.println(index++ + ". " + content.getTitle());
+                        System.out.println(content.getTechnicalSheet());
+                        System.out.println();
+                    }
+                }
+
                 case SHOW_HIGH_RATING -> {
                     int count = ScannerUtils.inputNumber("Enter the count to movies do you want show");
                     List<Movie> highRatingContent = platform.getPopularMovies(count);
@@ -129,15 +149,15 @@ public class Main {
     }
 
     private static void loadMovies(Platform platform){
-        platform.add(new Movie("Shrek", 90, Genre.ANIMATED, VideoQuality.HIGH));
-        platform.add(new Movie("Inception", 148, Genre.SCIENCE_FICTION, VideoQuality.LOW));
-        platform.add(new Movie("Titanic", 195, Genre.DRAMA, VideoQuality.HIGH, 4.6));
-        platform.add(new Movie("John Wick", 101, Genre.ACTION, VideoQuality.MEDIUM));
-        platform.add(new Movie("The Conjuring", 112, Genre.HORROR, VideoQuality.HD, 3.0));
-        platform.add(new Movie("Coco", 105, Genre.ANIMATED, VideoQuality.MEDIUM, 4.7));
-        platform.add(new Movie("Interstellar", 169, Genre.SCIENCE_FICTION, VideoQuality.HIGH, 5));
-        platform.add(new Movie("Joker", 122, Genre.DRAMA, VideoQuality.MEDIUM));
-        platform.add(new Movie("Toy Story", 81, Genre.ANIMATED, VideoQuality.LOW, 4.5));
-        platform.add(new Movie("Avengers: Endgame", 181, Genre.ACTION, VideoQuality.HD, 3.9));
+        platform.add(new Movie("Shrek", 90, Genre.ANIMATED, VideoQuality.HIGH, LanguageType.ENGLISH));
+        platform.add(new Movie("Inception", 148, Genre.SCIENCE_FICTION, VideoQuality.LOW, LanguageType.SPANISH));
+        platform.add(new Movie("Titanic", 195, Genre.DRAMA, VideoQuality.HIGH, LanguageType.FRENCH, 4.6));
+        platform.add(new Movie("John Wick", 101, Genre.ACTION, VideoQuality.MEDIUM, LanguageType.PORTUGUESE));
+        platform.add(new Movie("The Conjuring", 112, Genre.HORROR, VideoQuality.HD, LanguageType.ENGLISH, 3.0));
+        platform.add(new Movie("Coco", 105, Genre.ANIMATED, VideoQuality.MEDIUM, LanguageType.SPANISH, 4.7));
+        platform.add(new Movie("Interstellar", 169, Genre.SCIENCE_FICTION, VideoQuality.HIGH, LanguageType.ITALIAN, 5));
+        platform.add(new Movie("Joker", 122, Genre.DRAMA, VideoQuality.MEDIUM, LanguageType.ENGLISH));
+        platform.add(new Movie("Toy Story", 81, Genre.ANIMATED, VideoQuality.LOW, LanguageType.FRENCH, 4.5));
+        platform.add(new Movie("Avengers: Endgame", 181, Genre.ACTION, VideoQuality.HD, LanguageType.PORTUGUESE, 3.9));
     }
 }

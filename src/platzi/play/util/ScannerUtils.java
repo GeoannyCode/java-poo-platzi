@@ -1,6 +1,7 @@
 package platzi.play.util;
 
 import platzi.play.content.Genre;
+import platzi.play.content.LanguageType;
 import platzi.play.content.VideoQuality;
 
 import java.util.Arrays;
@@ -68,6 +69,17 @@ public class ScannerUtils {
         }
     }
 
+    public static LanguageType inputLanguageType(String message){
+        System.out.println("Available languages: " + Arrays.toString(LanguageType.values()));
 
+        while (true){
+            String input = inputText(message).trim().toUpperCase();
 
+            try {
+                return LanguageType.valueOf(input);
+            } catch (IllegalArgumentException e){
+                System.out.printf("'%s' is not a valid language. Please try again.%n%n", input);
+            }
+        }
+    }
 }

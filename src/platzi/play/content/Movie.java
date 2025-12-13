@@ -10,21 +10,23 @@ public class Movie {
     private int duration;
     private Genre genre;
     private VideoQuality videoQuality;
+    private LanguageType languageType;
     private LocalDate releaseDate;
     private double rating;
     private boolean available;
 
-    public Movie(String title, int duration, Genre genre, VideoQuality videoQuality){
+    public Movie(String title, int duration, Genre genre, VideoQuality videoQuality, LanguageType languageType){
         this.title = title;
         this.duration = duration;
         this.genre = genre;
         this.videoQuality = videoQuality;
+        this.languageType = languageType;
         this.releaseDate = LocalDate.now();
         this.available = true;
     }
 
-    public Movie(String title, int duration, Genre genre, VideoQuality videoQuality, double rating) {
-        this(title, duration, genre, videoQuality);
+    public Movie(String title, int duration, Genre genre, VideoQuality videoQuality,LanguageType languageType, double rating) {
+        this(title, duration, genre, videoQuality, languageType);
         this.rate(rating);
     }
 
@@ -37,6 +39,7 @@ public class Movie {
         return "Title: " + title + " (" + releaseDate.getYear() + ")\n" +
                 "   Genre: " + genre + "\n" +
                 "   Video Quality: " + videoQuality.getDescription() + " ("+  videoQuality.getLabel() + ")\n" +
+                "   Language type: " + languageType.getDescription() + " ("+ languageType.getLanguageCode() + ")\n" +
                 "   Rating: " + String.format("%.1f", rating) + "/5 ⭐";
     }
 
@@ -70,6 +73,8 @@ public class Movie {
         return videoQuality;
     }
 
+    public LanguageType getLanguageType() {return languageType;}
+
     public LocalDate getReleaseDate() {
         return releaseDate;
     }
@@ -89,6 +94,10 @@ public class Movie {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
+
+    public void setVideoQuality(VideoQuality videoQuality){this.videoQuality = videoQuality;}
+
+    public void setLanguageType(LanguageType languageType){this.languageType = languageType;}
 
     public void setAvailable(boolean available) {
         this.available = available;
