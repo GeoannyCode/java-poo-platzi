@@ -1,9 +1,6 @@
 package platzi.play.platform;
 
-import platzi.play.content.Genre;
-import platzi.play.content.LanguageType;
-import platzi.play.content.Movie;
-import platzi.play.content.VideoQuality;
+import platzi.play.content.*;
 import platzi.play.exception.ExistingMovieException;
 
 import java.util.ArrayList;
@@ -32,6 +29,12 @@ public class Platform {
     public List<String> getTitles(){
         return content.stream()
                 .map(Movie::getTitle)
+                .toList();
+    }
+
+    public List<ContentSummary> getSummary(){
+        return content.stream()
+                .map(c -> new  ContentSummary(c.getTitle(), c.getDuration(), c.getGenre()))
                 .toList();
     }
 

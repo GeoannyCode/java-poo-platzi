@@ -65,8 +65,8 @@ public class Main {
 
                 }
                 case SHOW_ALL -> {
-                    List<String> titles = platform.getTitles();
-                    titles.forEach(System.out::println);
+                    List<ContentSummary> titles = platform.getSummary();
+                    titles.forEach(summary -> System.out.println(summary.toDisplayMoviesSummary()));
                 }
                 case SEARCH_BY_TITLE -> {
                     String inputName = ScannerUtils.inputText("Enter the name you want to search");
