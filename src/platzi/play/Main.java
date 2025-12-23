@@ -20,8 +20,9 @@ public class Main {
                 5. Search by video quality
                 6. Search by language
                 7. Show popular movies
-                8. Delete
-                9. Exit
+                8. Play Movie
+                9. Delete
+                10. Exit
                 -----------------------------------
                 Select an option""";
 
@@ -32,8 +33,9 @@ public class Main {
     public static final int SEARCH_BY_VIDEO_QUALITY = 5;
     public static final int SEARCH_BY_LANGUAGE_TYPE = 6;
     public static final int SHOW_HIGH_RATING = 7;
-    public static final int DELETE = 8;
-    public static final int EXIT_VALUE = 9;
+    public static final int PLAY_MOVIE = 8;
+    public static final int DELETE = 9;
+    public static final int EXIT_VALUE = 10;
 
     public static void main(String[] args) {
         Platform platform = new Platform(NAME_PLATFORM);
@@ -134,6 +136,17 @@ public class Main {
                     List<Movie> highRatingContent = platform.getPopularMovies(count);
 
                     highRatingContent.forEach(content -> System.out.println(content.getTechnicalSheet() + "\n"));
+                }
+
+                case PLAY_MOVIE -> {
+                    String title = ScannerUtils.inputText("Title of the content to play");
+                    Movie content = platform.searchByTitle(title);
+
+                    if (content != null) {
+                        platform.play(content);
+                    } else {
+                        System.out.println(title + " does not exist.");
+                    }
                 }
 
                 case DELETE -> {

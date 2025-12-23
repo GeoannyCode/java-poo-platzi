@@ -32,7 +32,7 @@ public class Movie {
 
     // Methods
     public void play(){
-        System.out.println(title);
+        System.out.println("Playing " + title + "...");
     }
 
     public String getTechnicalSheet() {

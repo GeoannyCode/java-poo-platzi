@@ -3,17 +3,17 @@ package platzi.play.platform;
 import platzi.play.content.*;
 import platzi.play.exception.ExistingMovieException;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Platform {
     private String name;
     private List<Movie> content;
+    private Map<Movie, Integer> viewCount;
 
     public Platform(String name){
         this.name = name;
         this.content = new ArrayList<>();
+        this.viewCount = new HashMap<>();
     }
 
     public void add(Movie element){
@@ -30,6 +30,14 @@ public class Platform {
         return content.stream()
                 .map(Movie::getTitle)
                 .toList();
+    }
+
+    public void play(Movie content) {
+        int currentCount = viewCount.getOrDefault(content, 0);
+        System.out.println(content.getTitle() + " has been played " + currentCount + " times.");
+
+        viewCount.put(content, currentCount + 1);
+        content.play();
     }
 
     public List<ContentSummary> getSummary(){
