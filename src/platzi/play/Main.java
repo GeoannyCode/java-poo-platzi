@@ -3,8 +3,14 @@ package platzi.play;
 import platzi.play.content.*;
 import platzi.play.exception.ExistingMovieException;
 import platzi.play.platform.*;
+import platzi.play.util.FileUtils;
 import platzi.play.util.ScannerUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
@@ -169,15 +175,6 @@ public class Main {
     }
 
     private static void loadMovies(Platform platform){
-        platform.add(new Movie("Shrek", 90, Genre.ANIMATED, VideoQuality.HIGH, LanguageType.ENGLISH));
-        platform.add(new Movie("Inception", 148, Genre.SCIENCE_FICTION, VideoQuality.LOW, LanguageType.SPANISH));
-        platform.add(new Movie("Titanic", 195, Genre.DRAMA, VideoQuality.HIGH, LanguageType.FRENCH, 4.6));
-        platform.add(new Movie("John Wick", 101, Genre.ACTION, VideoQuality.MEDIUM, LanguageType.PORTUGUESE));
-        platform.add(new Movie("The Conjuring", 112, Genre.HORROR, VideoQuality.HD, LanguageType.ENGLISH, 3.0));
-        platform.add(new Movie("Coco", 105, Genre.ANIMATED, VideoQuality.MEDIUM, LanguageType.SPANISH, 4.7));
-        platform.add(new Movie("Interstellar", 169, Genre.SCIENCE_FICTION, VideoQuality.HIGH, LanguageType.ITALIAN, 5));
-        platform.add(new Movie("Joker", 122, Genre.DRAMA, VideoQuality.MEDIUM, LanguageType.ENGLISH));
-        platform.add(new Movie("Toy Story", 81, Genre.ANIMATED, VideoQuality.LOW, LanguageType.FRENCH, 4.5));
-        platform.add(new Movie("Avengers: Endgame", 181, Genre.ACTION, VideoQuality.HD, LanguageType.PORTUGUESE, 3.9));
+        platform.getContent().addAll(FileUtils.readContent());
     }
 }

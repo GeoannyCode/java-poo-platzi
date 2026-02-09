@@ -40,9 +40,16 @@ public class Platform {
         content.play();
     }
 
-    public List<ContentSummary> getSummary(){
+    public List<ContentSummary> getSummary() {
         return content.stream()
-                .map(c -> new  ContentSummary(c.getTitle(), c.getDuration(), c.getGenre()))
+                .map(c -> new ContentSummary(
+                        c.getTitle(),
+                        c.getDuration(),
+                        c.getGenre(),
+                        c.getVideoQuality(),
+                        c.getLanguageType(),
+                        c.getRating()
+                ))
                 .toList();
     }
 

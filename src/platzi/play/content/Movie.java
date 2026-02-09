@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Movie {
 
     // Attributes
-    private String title;
+    private final String title;
     private String description;
     private int duration;
     private Genre genre;
