@@ -8,6 +8,7 @@ import platzi.play.content.VideoQuality;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,31 @@ public class FileUtils {
 
     public static final String FILE_NAME = "content.txt";
     public static final String PIPE_SEPARATOR = "|";
+
+    public static void writeContent(Movie content){
+
+        String line = String.join(PIPE_SEPARATOR,
+                content.getTitle(),
+                String.valueOf(content.getDuration()),
+                String.valueOf(content.getGenre()),
+                String.valueOf(content.getVideoQuality()),
+                String.valueOf(content.getLanguageType()),
+                String.valueOf(content.getRating())
+        );
+
+        try{
+            Files.writeString(Paths.get(FILE_NAME),
+                    line + System.lineSeparator(),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND
+
+            );
+        }catch (IOException e){
+            System.out.println("Error writing the file !!! " + e.getMessage());
+        }
+
+
+    }
 
     public static List<Movie> readContent(){
         List<Movie> contentFile = new ArrayList<>();

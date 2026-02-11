@@ -2,7 +2,9 @@ package platzi.play.platform;
 
 import platzi.play.content.*;
 import platzi.play.exception.ExistingMovieException;
+import platzi.play.util.FileUtils;
 
+import java.io.File;
 import java.util.*;
 
 public class Platform {
@@ -23,6 +25,7 @@ public class Platform {
             throw new ExistingMovieException(element.getTitle());
         }
 
+        FileUtils.writeContent(element);
         this.content.add(element);
     }
 
