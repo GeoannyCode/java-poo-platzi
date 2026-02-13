@@ -15,9 +15,9 @@ public class User {
         this.registrationDate = LocalDateTime.now();
     }
 
-    public void watching(Movie movie){
+    public void watching(Content content){
         System.out.println(name + " is watching...");
-        movie.play();
+        content.play();
     }
 
     public String getName() {

@@ -1,16 +1,14 @@
 package platzi.play.platform;
-
 import platzi.play.content.*;
-import platzi.play.exception.ExistingMovieException;
+import platzi.play.exception.ExistingContentException;
 import platzi.play.util.FileUtils;
 
-import java.io.File;
 import java.util.*;
 
 public class Platform {
     private String name;
-    private List<Movie> content;
-    private Map<Movie, Integer> viewCount;
+    private List<Content> content;
+    private Map<Content, Integer> viewCount;
 
     public Platform(String name){
         this.name = name;
@@ -18,11 +16,11 @@ public class Platform {
         this.viewCount = new HashMap<>();
     }
 
-    public void add(Movie element){
-        Movie content = this.searchByTitle(element.getTitle());
+    public void add(Content element){
+        Content content = this.searchByTitle(element.getTitle());
 
         if(content != null){
-            throw new ExistingMovieException(element.getTitle());
+            throw new ExistingContentException(element.getTitle());
         }
 
         FileUtils.writeContent(element);
@@ -31,11 +29,11 @@ public class Platform {
 
     public List<String> getTitles(){
         return content.stream()
-                .map(Movie::getTitle)
+                .map(Content::getTitle)
                 .toList();
     }
 
-    public void play(Movie content) {
+    public void play(Content content) {
         int currentCount = viewCount.getOrDefault(content, 0);
         System.out.println(content.getTitle() + " has been played " + currentCount + " times.");
 
@@ -56,46 +54,46 @@ public class Platform {
                 .toList();
     }
 
-    public void delete(Movie element){
+    public void delete(Content element){
         this.content.remove(element);
     }
 
-    public Movie searchByTitle(String title){
+    public Content searchByTitle(String title){
         return content.stream()
                 .filter(content -> content.getTitle().equalsIgnoreCase(title))
                 .findFirst()
                 .orElse(null);
     }
 
-    public List <Movie> searchByGenre(Genre genre){
+    public List <Content> searchByGenre(Genre genre){
         return content.stream()
                 .filter(content -> content.getGenre().equals(genre))
                 .toList();
     }
 
-    public List <Movie> searchByVideoQuality(VideoQuality videoQuality){
+    public List <Content> searchByVideoQuality(VideoQuality videoQuality){
         return content.stream()
                 .filter(content -> content.getVideoQuality().equals(videoQuality))
                 .toList();
     }
 
 
-    public List <Movie> searchByLanguageType(LanguageType languageType){
+    public List <Content> searchByLanguageType(LanguageType languageType){
         return content.stream()
                 .filter(content -> content.getLanguageType().equals(languageType))
                 .toList();
     }
 
-    public List<Movie> getPopularMovies(int count){
+    public List<Content> getPopularMovies(int count){
         return content.stream()
-                .sorted(Comparator.comparingDouble(Movie::getRating).reversed())
+                .sorted(Comparator.comparingDouble(Content::getRating).reversed())
                 .limit(count)
                 .toList();
     }
 
     public int getTotalDuration(){
         return content.stream()
-                .mapToInt(Movie::getDuration)
+                .mapToInt(Content::getDuration)
                 .sum();
     }
 
@@ -103,7 +101,7 @@ public class Platform {
         return name;
     }
 
-    public List<Movie> getContent(){
+    public List<Content> getContent(){
         return content;
     }
 }

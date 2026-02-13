@@ -1,17 +1,13 @@
 package platzi.play;
 
 import platzi.play.content.*;
-import platzi.play.exception.ExistingMovieException;
+import platzi.play.exception.ExistingContentException;
 import platzi.play.platform.*;
 import platzi.play.util.FileUtils;
 import platzi.play.util.ScannerUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static final String NAME_PLATFORM = "PLATZI PLAY";
@@ -56,6 +52,9 @@ public class Main {
 
             switch (selectedOption){
                 case ADD_CONTENT -> {
+
+                    int contentType = ScannerUtils.inputNumber("What type of content would you like to add?\n 1. Movie\n 2. Documentary");
+
                     String name = ScannerUtils.inputText("Content name");
                     Genre genre = ScannerUtils.inputGenre("Content genre");
                     VideoQuality videoQuality = ScannerUtils.inputVideoQuality("Content video quality");
@@ -64,9 +63,13 @@ public class Main {
                     double rating = ScannerUtils.inputDecimalValue("Content rating");
 
                     try {
-                        Movie movie = new Movie(name, duration, genre, videoQuality, languageType,  rating);
-                        platform.add(movie);
-                    }catch (ExistingMovieException e){
+                        if (contentType == 1) {
+                            platform.add(new Movie(name, duration, genre, videoQuality, languageType, rating));
+                        } else {
+                            String narrator = ScannerUtils.inputText("Enter the narrator's name:");
+                            platform.add(new Documentary(name, duration, genre, videoQuality, languageType, rating, narrator));
+                        }
+                    }catch (ExistingContentException e){
                         System.out.println(e.getMessage());
                     }
 
@@ -78,10 +81,10 @@ public class Main {
                 }
                 case SEARCH_BY_TITLE -> {
                     String inputName = ScannerUtils.inputText("Enter the name you want to search");
-                    Movie movie = platform.searchByTitle(inputName);
+                    Content content = platform.searchByTitle(inputName);
 
-                    if (movie != null){
-                        System.out.println(movie.getTechnicalSheet());
+                    if (content != null){
+                        System.out.println(content.getTechnicalSheet());
                     }else {
                         System.out.println("Could not find \"" + inputName + "\" in " + platform.getName());
                     }
@@ -89,14 +92,14 @@ public class Main {
                 case SEARCH_BY_GENRE -> {
                     Genre genreSearching = ScannerUtils.inputGenre("Enter the genre you want to search: ");
 
-                    List<Movie> contentForGenre = platform.searchByGenre(genreSearching);
+                    List<Content> contentForGenre = platform.searchByGenre(genreSearching);
 
                     System.out.println("\n=== Search Results for Genre: " + genreSearching + " ===");
                     System.out.println("Total results: " + contentForGenre.size());
                     System.out.println("----------------------------------------");
 
                     int index = 1;
-                    for (Movie content : contentForGenre) {
+                    for (Content content : contentForGenre) {
                         System.out.println(index++ + ". " + content.getTitle());
                         System.out.println(content.getTechnicalSheet());
                         System.out.println();
@@ -106,14 +109,14 @@ public class Main {
                 case SEARCH_BY_VIDEO_QUALITY ->{
                     VideoQuality videoQualitySearching = ScannerUtils.inputVideoQuality("Enter the video quality you want to search: ");
 
-                    List<Movie> contentForVideoQuality = platform.searchByVideoQuality(videoQualitySearching);
+                    List<Content> contentForVideoQuality = platform.searchByVideoQuality(videoQualitySearching);
 
                     System.out.println("\n=== Search Results for video quality: " + videoQualitySearching + " ===");
                     System.out.println("Total results: " + contentForVideoQuality.size());
                     System.out.println("----------------------------------------");
 
                     int index = 1;
-                    for (Movie content : contentForVideoQuality) {
+                    for (Content content : contentForVideoQuality) {
                         System.out.println(index++ + ". " + content.getTitle());
                         System.out.println(content.getTechnicalSheet());
                         System.out.println();
@@ -123,14 +126,14 @@ public class Main {
                 case SEARCH_BY_LANGUAGE_TYPE -> {
                     LanguageType languageTypeSearching = ScannerUtils.inputLanguageType("Enter the language you want to search: ");
 
-                    List<Movie> moviesByLanguage = platform.searchByLanguageType(languageTypeSearching);
+                    List<Content> moviesByLanguage = platform.searchByLanguageType(languageTypeSearching);
 
                     System.out.println("\n=== Search Results for language type: " + languageTypeSearching + " ===");
                     System.out.println("Total results: " + moviesByLanguage.size());
                     System.out.println("----------------------------------------");
 
                     int index = 1;
-                    for (Movie content : moviesByLanguage) {
+                    for (Content content : moviesByLanguage) {
                         System.out.println(index++ + ". " + content.getTitle());
                         System.out.println(content.getTechnicalSheet());
                         System.out.println();
@@ -139,14 +142,14 @@ public class Main {
 
                 case SHOW_HIGH_RATING -> {
                     int count = ScannerUtils.inputNumber("Enter the count to movies do you want show");
-                    List<Movie> highRatingContent = platform.getPopularMovies(count);
+                    List<Content> highRatingContent = platform.getPopularMovies(count);
 
                     highRatingContent.forEach(content -> System.out.println(content.getTechnicalSheet() + "\n"));
                 }
 
                 case PLAY_MOVIE -> {
                     String title = ScannerUtils.inputText("Title of the content to play");
-                    Movie content = platform.searchByTitle(title);
+                    Content content = platform.searchByTitle(title);
 
                     if (content != null) {
                         platform.play(content);
@@ -157,10 +160,10 @@ public class Main {
 
                 case DELETE -> {
                     String inputName = ScannerUtils.inputText("Please enter the number of movies to display");
-                    Movie movie = platform.searchByTitle(inputName);
+                    Content content = platform.searchByTitle(inputName);
 
-                    if (movie != null){
-                        platform.delete(movie);
+                    if (content != null){
+                        platform.delete(content);
                         System.out.println("Deletion successful!");
                     }else {
                         System.out.println("Could not find \"" + inputName + "\" in " + platform.getName());

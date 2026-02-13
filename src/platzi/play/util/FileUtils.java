@@ -1,8 +1,8 @@
 package platzi.play.util;
 
+import platzi.play.content.Content;
 import platzi.play.content.Genre;
 import platzi.play.content.LanguageType;
-import platzi.play.content.Movie;
 import platzi.play.content.VideoQuality;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class FileUtils {
     public static final String FILE_NAME = "content.txt";
     public static final String PIPE_SEPARATOR = "|";
 
-    public static void writeContent(Movie content){
+    public static void writeContent(Content content){
 
         String line = String.join(PIPE_SEPARATOR,
                 content.getTitle(),
@@ -42,8 +42,8 @@ public class FileUtils {
 
     }
 
-    public static List<Movie> readContent(){
-        List<Movie> contentFile = new ArrayList<>();
+    public static List<Content> readContent(){
+        List<Content> contentFile = new ArrayList<>();
 
         try {
             List<String> lines = Files.readAllLines(Paths.get(FILE_NAME));
@@ -58,9 +58,9 @@ public class FileUtils {
                     VideoQuality videoQuality = VideoQuality.valueOf(data[3]);
                     LanguageType languageType = LanguageType.valueOf(data[4]);
                     double rating = data[5].isBlank() ? 0 : Double.parseDouble(data[5]);
-                    Movie movie = new Movie(title, duration, genre, videoQuality, languageType , rating);
+                    Content content = new Content(title, duration, genre, videoQuality, languageType , rating);
 
-                    contentFile.add(movie);
+                    contentFile.add(content);
                 }
             });
         } catch (IOException e) {
