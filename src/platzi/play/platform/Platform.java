@@ -91,6 +91,20 @@ public class Platform {
                 .toList();
     }
 
+    public List<Movie> getMovies(){
+        return content.stream()
+                .filter(content -> content instanceof Movie)
+                .map(filteredContent -> (Movie) filteredContent)
+                .toList();
+    }
+
+    public List<Documentary> getDocumentary(){
+        return content.stream()
+                .filter(content -> content instanceof Documentary)
+                .map(filteredContent -> (Documentary) filteredContent)
+                .toList();
+    }
+
     public int getTotalDuration(){
         return content.stream()
                 .mapToInt(Content::getDuration)

@@ -36,11 +36,21 @@ public class Content {
     }
 
     public String getTechnicalSheet() {
-        return "Title: " + title + " (" + releaseDate.getYear() + ")\n" +
-                "   Genre: " + genre + "\n" +
-                "   Video Quality: " + videoQuality.getDescription() + " ("+  videoQuality.getLabel() + ")\n" +
-                "   Language type: " + languageType.getDescription() + " ("+ languageType.getLanguageCode() + ")\n" +
-                "   Rating: " + String.format("%.1f", rating) + "/5 ⭐";
+        return """
+           📌 Title:    %s
+           ⏳ Duration: %d min
+           🎭 Genre:    %s
+           📺 Quality:  %s
+           🌐 Language: %s
+           ⭐ Rating:   %.1f/5.0
+           """.formatted(
+                title,
+                duration,
+                genre,
+                videoQuality.getLabel(),
+                languageType.getDescription().toUpperCase(),
+                rating
+        );
     }
 
     public void rate(double rating){

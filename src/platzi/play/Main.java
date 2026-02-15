@@ -21,10 +21,11 @@ public class Main {
                 4. Search by genre
                 5. Search by video quality
                 6. Search by language
-                7. Show popular movies
-                8. Play Movie
-                9. Delete
-                10. Exit
+                7. Search by type
+                8. Show popular movies
+                9. Play Movie
+                10. Delete
+                11. Exit
                 -----------------------------------
                 Select an option""";
 
@@ -34,10 +35,11 @@ public class Main {
     public static final int SEARCH_BY_GENRE = 4;
     public static final int SEARCH_BY_VIDEO_QUALITY = 5;
     public static final int SEARCH_BY_LANGUAGE_TYPE = 6;
-    public static final int SHOW_HIGH_RATING = 7;
-    public static final int PLAY_MOVIE = 8;
-    public static final int DELETE = 9;
-    public static final int EXIT_VALUE = 10;
+    public static final int SEARCH_BY_TYPE = 7;
+    public static final int SHOW_HIGH_RATING = 8;
+    public static final int PLAY_MOVIE = 9;
+    public static final int DELETE = 10;
+    public static final int EXIT_VALUE = 11;
 
     public static void main(String[] args) {
         Platform platform = new Platform(NAME_PLATFORM);
@@ -137,6 +139,17 @@ public class Main {
                         System.out.println(index++ + ". " + content.getTitle());
                         System.out.println(content.getTechnicalSheet());
                         System.out.println();
+                    }
+                }
+
+                case SEARCH_BY_TYPE -> {
+                    int contentType = ScannerUtils.inputNumber("What type of content would you like to search?\n 1. Movie\n 2. Documentary");
+                    if (contentType == 1){
+                        List<Movie> Movies = platform.getMovies();
+                        Movies.forEach(movie -> System.out.println(movie.getTechnicalSheet() + "\n"));
+                    }else {
+                        List<Documentary> Documentaries = platform.getDocumentary();
+                        Documentaries.forEach(documentary -> System.out.println(documentary.getTechnicalSheet() + "\n"));
                     }
                 }
 

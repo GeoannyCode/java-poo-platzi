@@ -1,9 +1,6 @@
 package platzi.play.util;
 
-import platzi.play.content.Content;
-import platzi.play.content.Genre;
-import platzi.play.content.LanguageType;
-import platzi.play.content.VideoQuality;
+import platzi.play.content.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,12 +25,19 @@ public class FileUtils {
                 String.valueOf(content.getRating())
         );
 
+        String finalLine;
+
+        if(content instanceof Documentary documentary){
+            finalLine = "DOCUMENTARY" + PIPE_SEPARATOR + line + PIPE_SEPARATOR + documentary.getNarrator();
+        }else {
+            finalLine = "MOVIE" + PIPE_SEPARATOR + line;
+        }
+
         try{
             Files.writeString(Paths.get(FILE_NAME),
-                    line + System.lineSeparator(),
+                    finalLine + System.lineSeparator(),
                     StandardOpenOption.CREATE,
                     StandardOpenOption.APPEND
-
             );
         }catch (IOException e){
             System.out.println("Error writing the file !!! " + e.getMessage());
@@ -50,15 +54,23 @@ public class FileUtils {
 
             lines.forEach(line -> {
                 String[] data = line.split("\\" + PIPE_SEPARATOR);
+                String contentType = data[0];
 
-                if(data.length == 6){
-                    String title = data[0];
-                    int duration = Integer.parseInt(data[1]);
-                    Genre genre = Genre.valueOf(data[2].toUpperCase());
-                    VideoQuality videoQuality = VideoQuality.valueOf(data[3]);
-                    LanguageType languageType = LanguageType.valueOf(data[4]);
-                    double rating = data[5].isBlank() ? 0 : Double.parseDouble(data[5]);
-                    Content content = new Content(title, duration, genre, videoQuality, languageType , rating);
+                if(("MOVIE".equals(contentType) && data.length == 7) || ("DOCUMENTARY".equals(contentType) && data.length == 8)){
+                    String title = data[1];
+                    int duration = Integer.parseInt(data[2]);
+                    Genre genre = Genre.valueOf(data[3].toUpperCase());
+                    VideoQuality videoQuality = VideoQuality.valueOf(data[4]);
+                    LanguageType languageType = LanguageType.valueOf(data[5]);
+                    double rating = data[6].isBlank() ? 0 : Double.parseDouble(data[6]);
+                    Content content;
+
+                    if("MOVIE".equals(contentType)){
+                        content = new Movie(title, duration, genre, videoQuality, languageType , rating);
+                    }else {
+                        String narrator = data[7];
+                        content = new Documentary(title, duration, genre, videoQuality, languageType , rating, narrator);
+                    }
 
                     contentFile.add(content);
                 }
