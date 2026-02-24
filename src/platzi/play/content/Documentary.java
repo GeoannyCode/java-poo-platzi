@@ -13,6 +13,34 @@ public class Documentary extends Content{
         this.narrator = narrator;
     }
 
+    @Override
+    public void play(){
+        System.out.println("Playing the documentary " + getTitle() + " narrated by " + getNarrator());
+    }
+
+    @Override
+    public String getTechnicalSheet() {
+        return """
+           📌 Title:    %s
+           🎙️ Narrator:  %s
+           ⏳ Duration:  %d min
+           🎭 Genre:    %s
+           📺 Quality:  %s
+           🌐 Language: %s
+           ⭐ Rating:    %.1f/5.0
+           
+           """.formatted(
+                getTitle(),
+                getNarrator(),
+                getDuration(),
+                getGenre(),
+                getVideoQuality().getLabel(),
+                getLanguageType().getDescription().toUpperCase(),
+                getRating()
+
+        );
+    }
+
     public String getNarrator(){
         return narrator;
     }

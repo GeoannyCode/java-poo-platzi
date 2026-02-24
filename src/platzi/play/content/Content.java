@@ -2,7 +2,7 @@ package platzi.play.content;
 
 import java.time.LocalDate;
 
-public class Content {
+public abstract class Content {
 
     // Attributes
     private final String title;
@@ -31,27 +31,9 @@ public class Content {
     }
 
     // Methods
-    public void play(){
-        System.out.println("Playing " + title + "...");
-    }
+    public abstract void play();
 
-    public String getTechnicalSheet() {
-        return """
-           📌 Title:    %s
-           ⏳ Duration: %d min
-           🎭 Genre:    %s
-           📺 Quality:  %s
-           🌐 Language: %s
-           ⭐ Rating:   %.1f/5.0
-           """.formatted(
-                title,
-                duration,
-                genre,
-                videoQuality.getLabel(),
-                languageType.getDescription().toUpperCase(),
-                rating
-        );
-    }
+    public abstract String getTechnicalSheet();
 
     public void rate(double rating){
         if (rating >= 0 && rating <= 10){
