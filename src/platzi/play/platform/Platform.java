@@ -105,6 +105,13 @@ public class Platform {
                 .toList();
     }
 
+    public List<Marketable> getMarketables(){
+        return content.stream()
+                .filter(content -> content instanceof Marketable)
+                .map(filteredContent -> (Marketable) filteredContent)
+                .toList();
+    }
+
     public int getTotalDuration(){
         return content.stream()
                 .mapToInt(Content::getDuration)

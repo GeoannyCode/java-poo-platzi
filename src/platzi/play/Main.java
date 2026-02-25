@@ -48,6 +48,7 @@ public class Main {
         loadMovies(platform);
 
         System.out.println(platform.getTotalDuration() + " minutes of total content. \n");
+        platform.getMarketables().forEach(marketable -> System.out.println(marketable.promote()));
 
         while (true) {
             int selectedOption = ScannerUtils.inputNumber(MENU);

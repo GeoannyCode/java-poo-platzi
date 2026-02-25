@@ -1,6 +1,6 @@
 package platzi.play.content;
 
-public class Documentary extends Content{
+public class Documentary extends Content implements Marketable{
 
     private String narrator;
 
@@ -39,6 +39,11 @@ public class Documentary extends Content{
                 getRating()
 
         );
+    }
+
+    @Override
+    public String promote() {
+        return "Discover the documentary " + this.getTitle() + " narrated by " + this.getNarrator() + ". Now on PlatziPlay!";
     }
 
     public String getNarrator(){
